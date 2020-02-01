@@ -4,7 +4,7 @@
   tasks:
     - name: installing packages
       package: 
-        name: ["vsftpd"]
+        name: ["ftp","vsftpd"]
         state: "installed"
 
     - name: Adding the users
@@ -13,13 +13,13 @@
         comment: John Doe
         password: "$1$JpQ2xfLx$Y8ORT7I4FYBpqKYTIseEY0"
     
-    - name: Editing line 
+    - name: Editing vsftpd.conf
       lineinfile:
         path: /etc/vsftpd.conf
         regexp: ".*chroot_local_user.*"
         line: chroot_local_user=YES
     
-    - name: Editing line 
+    - name: Editing pam.d/vsftpd
       lineinfile:
         path: /etc/pam.d/vsftpd
         regexp: ".*pam_shell.*"
