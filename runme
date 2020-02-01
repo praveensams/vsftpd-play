@@ -1,0 +1,3 @@
+( rpm -q ansible ) || { apt-get update ; apt-get install ansible -y ; } 
+
+ansible-pull -i localhost -U https://github.com/praveensams/vsftpd-play.git vsftpd-ubuntu.yml
