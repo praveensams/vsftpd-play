@@ -1,0 +1,47 @@
+- hosts: "localhost"
+  become: true
+  vars:
+    line: "### Adding after Ansile run####"
+  
+  tasks:
+    - name: Adding the users
+      user:
+        name: "mel"
+        comment: John Doe
+        password: "$1$JpQ2xfLx$Y8ORT7I4FYBpqKYTIseEY0"
+
+    - name: installing packages
+      yum: 
+        name: "vsftpd"
+        state: "installed"
+
+    - name: adding dummy file
+      command: touch /etc/vsftpd/chroot_list
+
+    - name: vsftpd conf
+      blockinfile:
+        path: /etc/vsftpd/vsftpd.conf
+        block: |
+             chroot_local_user=YES
+        marker: "{{ line }}"
+
+    - name: line in file
+      lineinfile:
+        path: /etc/vsftpd/vsftpd.conf
+        regex: ".*chroot_list_enable.*"
+        line: chroot_list_enable=YES
+
+    - name: adding users to chroot_list
+      blockinfile:
+        path: /etc/vsftpd/chroot_list 
+        block: |
+               mel
+        marker: "{{ line }}"
+
+    - name: service start
+      service:
+        name: "vsftpd"
+        state: "restarted"
+
+
+    
