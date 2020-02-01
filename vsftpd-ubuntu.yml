@@ -18,6 +18,12 @@
         path: /etc/vsftpd.conf
         regexp: ".*chroot_local_user.*"
         line: chroot_local_user=YES
+    
+    - name: Editing line 
+      lineinfile:
+        path: /etc/pam.d/vsftpd
+        regexp: ".*pam_shell.*"
+        line: '# auth required  pam_shells.so'
 
     - name: starting the service
       service:
