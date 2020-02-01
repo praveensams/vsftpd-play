@@ -1,0 +1,26 @@
+- hosts: "localhost"
+  become: true
+
+  tasks:
+    - name: installing packages
+      package: 
+        name: ["vsftpd"]
+        state: "installed"
+
+    - name: Adding the users
+      user:
+        name: "mel"
+        comment: John Doe
+        password: "$1$JpQ2xfLx$Y8ORT7I4FYBpqKYTIseEY0"
+    
+    - name: Editing line 
+      lineinfile:
+        path: /etc/vsftpd/vsftpd.conf
+        regex: ".*chroot_local_user.*"
+        line: chroot_local_user=YES
+
+    - name: starting the service
+      service:
+        name: "vsftpd"
+        state: "started"
+
