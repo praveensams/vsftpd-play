@@ -15,7 +15,7 @@
     
     - name: Editing line 
       lineinfile:
-        path: /etc/vsftpd/vsftpd.conf
+        path: /etc/vsftpd.conf
         regex: ".*chroot_local_user.*"
         line: chroot_local_user=YES
 
