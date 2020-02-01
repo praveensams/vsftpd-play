@@ -16,7 +16,7 @@
     - name: Editing line 
       lineinfile:
         path: /etc/vsftpd.conf
-        regex: ".*chroot_local_user.*"
+        regexp: ".*chroot_local_user.*"
         line: chroot_local_user=YES
 
     - name: starting the service
